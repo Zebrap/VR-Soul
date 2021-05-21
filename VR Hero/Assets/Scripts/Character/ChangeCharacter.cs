@@ -34,8 +34,7 @@ public class ChangeCharacter : MonoBehaviour
         // disable XR character controller
        // characterObject.GetComponent<XRCharacterController>().enabled = !isAi;
         if(!isAi){
-            XRController.mesh = characterObject.transform;
-            XRController.SetCharacter(characterObject.GetComponent<Animator>(), characterObject.GetComponent<CharacterController>(), characterObject.GetComponent<CharacterManager>());
+            XRController.SetCharacter(characterObject.GetComponent<Animator>(), characterObject.GetComponent<CharacterController>(), characterObject.GetComponent<CharacterManager>(),characterObject.transform);
         }
 
         // active Enemy Controller

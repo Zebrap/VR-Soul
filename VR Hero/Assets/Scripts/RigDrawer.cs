@@ -8,8 +8,7 @@ public class RigDrawer : MonoBehaviour
 {
     public GameObject origin = null;
     public float multipleSize;
-    private void OnDrawGizmos()
-    {
+    private void OnDrawGizmosSelected() {
         if(origin != null){
             Gizmos.color = Color.green;
             Gizmos.DrawWireCube(origin.transform.position, 

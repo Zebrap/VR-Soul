@@ -56,8 +56,8 @@ public class EnemyController : MonoBehaviour
         }
         if (characterManager.isAlive)
         {
-            //  animator.SetFloat("Move", agent.velocity.magnitude);
-            animator.SetFloat("Move", agent.velocity.magnitude, speedSmoothTime, Time.deltaTime);
+              animator.SetFloat("Move", agent.velocity.magnitude);
+            //animator.SetFloat("Move", agent.velocity.magnitude, speedSmoothTime, Time.deltaTime);
         }
     }
 

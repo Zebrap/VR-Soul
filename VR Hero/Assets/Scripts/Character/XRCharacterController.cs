@@ -9,7 +9,7 @@ public class XRCharacterController : MonoBehaviour
     public float speed = 5.0f;
 
     public Transform head = null;
-    public Transform mesh = null;
+    private Transform mesh = null;
     public XRController controller = null;
 
     private Animator animator = null;
@@ -21,11 +21,12 @@ public class XRCharacterController : MonoBehaviour
 
     private bool isPressAttack = false;
 
-    public void SetCharacter(Animator animator, CharacterController characterController, CharacterManager characterManager)
+    public void SetCharacter(Animator animator, CharacterController characterController, CharacterManager characterManager, Transform mesh)
     {
         this.animator = animator;
         this.character = characterController;
         this.characterManager = characterManager;
+        this.mesh = mesh;
     }
 
     private void Update()
