@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,11 @@ public class CharacterManager : MonoBehaviour
     private CharacterController characterController;
     private CapsuleCollider capsuleCollider;
 
+    public delegate void EventHandlerGetHit(float hp, float maxHp);
+    public event EventHandlerGetHit OnGetHit;
+
+    public delegate void EventHandlerOnDie();
+    public event EventHandlerOnDie OnDieEvent;
     private void Awake() {
         stats = GetComponent<Stats>();
         animator = GetComponent<Animator>();
@@ -34,6 +40,10 @@ public class CharacterManager : MonoBehaviour
         stats.OnDieCallBack += Die;
     }
 
+    public void InitPlayerOnMe(){
+            OnGetHit?.Invoke(stats.health, stats.maxHealth);
+    }
+
     public void GetHit(float dmg)
     {
         if (isAlive)
@@ -44,6 +54,7 @@ public class CharacterManager : MonoBehaviour
             StartCoroutine("HurtDelay");
             animator.SetTrigger("Hurt");
             stats.GetHit(dmg);
+            OnGetHit?.Invoke(stats.health, stats.maxHealth);
         }
     }
 
@@ -82,6 +93,7 @@ public class CharacterManager : MonoBehaviour
     }
 
     private void Die(){
+        OnDieEvent?.Invoke();
         animator.SetBool("Death",true);
         isAlive = false;
         StartCoroutine(Decompose());
@@ -100,10 +112,30 @@ public class CharacterManager : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public void SelectInteract(){
+        if(isAlive){
+            FindObjectOfType<ChangeCharacter>().ChangeToNewCharacter(gameObject);
+        }
+    }
+
     private void OnDrawGizmosSelected()
     {
         if (attackPoint == null)
             return;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
+    [HideInInspector]
+    public bool isJumping;
+
+    internal void Jump()
+    {
+        isJumping = true;
+        animator.SetTrigger("Jump");
+        StartCoroutine("EndJump");
+    }
+
+    IEnumerator EndJump(){
+        yield return new WaitForSeconds(1.2f);
+        isJumping = false;
     }
 }

@@ -8,7 +8,7 @@ public class ChangeCharacter : MonoBehaviour
     public GameObject currentPlayer;
     public XRCharacterController XRController;
 
-    public SoulMove soul;
+    public Soul soul;
 
     private void Start() {
         XRController = GetComponent<XRCharacterController>();
@@ -18,7 +18,7 @@ public class ChangeCharacter : MonoBehaviour
 
     public void ChangeToNewCharacter(GameObject selectedCharacter)
     {
-        ChangeCharacterObject(true, currentPlayer);
+        if(currentPlayer!=null) ChangeCharacterObject(true, currentPlayer);
         ChangeCharacterObject(false, selectedCharacter);
         currentPlayer = selectedCharacter;
         soul.NewTarget(currentPlayer.transform);
@@ -43,7 +43,7 @@ public class ChangeCharacter : MonoBehaviour
 
         // active navMesh agent
         characterObject.GetComponent<NavMeshAgent>().enabled = isAi;
-
+    /*
         characterObject.layer = isAi ?  LayerMask.NameToLayer("Enemy") :  LayerMask.NameToLayer("Ally");
 
         if(isAi){
@@ -51,6 +51,6 @@ public class ChangeCharacter : MonoBehaviour
         }else
         {
             characterObject.GetComponent<CharacterManager>().enemyLayers = LayerMask.GetMask("Enemy");
-        }
+        }*/
     }
 }

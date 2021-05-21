@@ -21,7 +21,7 @@ public class Stats : MonoBehaviour
         if(health <= 0){
             health = 0;
             if(OnDieCallBack!=null)
-                OnDieCallBack.Invoke();
+                OnDieCallBack?.Invoke();
         }
     }
 

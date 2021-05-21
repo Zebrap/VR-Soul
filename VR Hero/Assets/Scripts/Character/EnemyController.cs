@@ -39,23 +39,26 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        if (characterManager.isAlive && isTargetInReach && characterManager.canMove)
+        if (characterManager.isAlive && isTargetInReach && characterManager.canMove && player != null)
         {
-            if (!isAttack && TargetInRange())
+            if (player.GetComponent<CharacterManager>().isAlive)
             {
-                StartCoroutine("AttackDelay");
+                if (!isAttack && TargetInRange())
+                {
+                    StartCoroutine("AttackDelay");
+                }
+                else
+                {
+                    StopCoroutine("AttackDelay");
+                    FollowPlayer();
+                }
+                FaceTarget();
             }
-            else
-            {
-                StopCoroutine("AttackDelay");
-                FollowPlayer();
-            }
-            FaceTarget();
         }
         if (characterManager.isAlive)
         {
-            animator.SetFloat("Move", agent.velocity.magnitude);
-            // animator.SetFloat("Move", agent.velocity.magnitude, speedSmoothTime, Time.deltaTime);
+            //  animator.SetFloat("Move", agent.velocity.magnitude);
+            animator.SetFloat("Move", agent.velocity.magnitude, speedSmoothTime, Time.deltaTime);
         }
     }
 
@@ -122,16 +125,22 @@ public class EnemyController : MonoBehaviour
             Collider[] characters = Physics.OverlapSphere(transform.position, appprochingRange, characterManager.enemyLayers);
             foreach (Collider character in characters)
             {
-                player = character.transform;
+                if (character.GetComponent<CharacterManager>().isAlive)
+                {
+                    player = character.transform;
+                }
             }
             if (characters.Length == 0)
             {
                 isTargetInReach = false;
                 GoBackToStartPosition();
             }
-            else
+            else if (player != null)
             {
-                isTargetInReach = true;
+                if (player.GetComponent<CharacterManager>().isAlive)
+                {
+                    isTargetInReach = true;
+                }
             }
         }
     }

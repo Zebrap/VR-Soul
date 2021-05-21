@@ -19,14 +19,10 @@ public class XRCharacterController : MonoBehaviour
 
     private Vector3 currentDirection = Vector3.zero;
 
-    private void Awake()
-    {
-      //  animator = GetComponent<Animator>();
-      //  character = GetComponent<CharacterController>();
-      //  characterManager = GetComponent<CharacterManager>();
-    }
+    private bool isPressAttack = false;
 
-    public void SetCharacter(Animator animator, CharacterController characterController, CharacterManager characterManager){
+    public void SetCharacter(Animator animator, CharacterController characterController, CharacterManager characterManager)
+    {
         this.animator = animator;
         this.character = characterController;
         this.characterManager = characterManager;
@@ -34,29 +30,16 @@ public class XRCharacterController : MonoBehaviour
 
     private void Update()
     {
-        if (controller.enableInputActions)
+        if (controller.enableInputActions && character != null)
         {
-            AttackInput(controller.inputDevice);
-            CheckFormMovment(controller.inputDevice);
+            if (characterManager.isAlive)
+            {
+                AttackInput(controller.inputDevice);
+                JumpInput(controller.inputDevice);
+                CheckFormMovment(controller.inputDevice);
+            }
         }
     }
-    /*
-    private bool isTigggerPressed;
-    private void CheckTrigger(InputDevice device){
-        if (device.TryGetFeatureValue(CommonUsages.triggerButton, out bool pressTrigger) && pressTrigger)
-        {
-            if(pressTrigger){
-                if(!isTigggerPressed)
-                {
-                    isTigggerPressed = true;
-                }
-            }
-            else
-            {
-                isTigggerPressed = false;
-            }
-        }
-    }*/
 
     private void CheckFormMovment(InputDevice device)
     {
@@ -101,14 +84,13 @@ public class XRCharacterController : MonoBehaviour
         animator.SetFloat("Move", blend);
     }
 
-    private bool isPressAttack = false;
-
     private void AttackInput(InputDevice device)
     {
         if (device.TryGetFeatureValue(CommonUsages.primaryButton, out bool isPressing))
         {
-            if(isPressing){
-                if(!isPressAttack)
+            if (isPressing)
+            {
+                if (!isPressAttack)
                 {
                     isPressAttack = true;
                     characterManager.Attack();
@@ -117,6 +99,18 @@ public class XRCharacterController : MonoBehaviour
             else
             {
                 isPressAttack = false;
+            }
+        }
+    }
+
+    private void JumpInput(InputDevice device)
+    {
+
+        if (device.TryGetFeatureValue(CommonUsages.secondaryButton, out bool isPressing))
+        {
+            if (isPressing && !characterManager.isJumping && characterManager.canMove)
+            {
+                characterManager.Jump();
             }
         }
     }
