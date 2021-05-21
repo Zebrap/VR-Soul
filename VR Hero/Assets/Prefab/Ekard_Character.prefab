@@ -1686,7 +1686,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   isTargetInReach: 0
   isApprochingTarget: 0
-  appprochingRange: 1.8
+  appprochingRange: 4
   isAttack: 0
   speedFaceTargetRotation: 4
 --- !u!114 &6229006254985734564

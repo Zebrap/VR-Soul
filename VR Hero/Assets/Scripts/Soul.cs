@@ -36,6 +36,7 @@ public class Soul : MonoBehaviour
         characterManager.OnDieEvent += OnLostCharacter;
 
         characterManager.InitPlayerOnMe();
+        StopCoroutine("DeathTimer");
         hasCharacter = true;
     }
     Vector3 vector;

@@ -33,8 +33,7 @@ public class EnemyController : MonoBehaviour
 
     private void OnEnable()
     {
-
-        InvokeRepeating("CheckApproching", 2f, 0.5f);
+        InvokeRepeating("CheckApproching", 1f, 0.3f);
     }
 
     private void Update()
@@ -118,15 +117,18 @@ public class EnemyController : MonoBehaviour
         return false;
     }
 
+
     private void CheckApproching()
     {
         if (characterManager.isAlive)
         {
+            float closeDistance = 1000f;
             Collider[] characters = Physics.OverlapSphere(transform.position, appprochingRange, characterManager.enemyLayers);
             foreach (Collider character in characters)
             {
-                if (character.GetComponent<CharacterManager>().isAlive)
+                if (character.GetComponent<CharacterManager>().isAlive && Vector3.Distance(transform.position, character.transform.position) <= closeDistance)
                 {
+                    closeDistance = Vector3.Distance(transform.position, character.transform.position);
                     player = character.transform;
                 }
             }
