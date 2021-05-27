@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public Transform[] prefabCharacter;
-
-    public int maxSpawn = 3;
-    public int countCharactersInSpawner = 10;
-
     public Transform targetForCharacters;
+
+    public ArmyResources armyResources;
 
     private void Start()
     {
@@ -18,13 +15,17 @@ public class Spawner : MonoBehaviour
 
     public void SpawnCharacter()
     {
-        if (transform.childCount < maxSpawn && countCharactersInSpawner > 0)
-        {
-            countCharactersInSpawner--;
-            Transform character = Instantiate(prefabCharacter[Random.Range(0, prefabCharacter.Length)], transform);
-            if (targetForCharacters != null)
+        Transform prefab = armyResources.GetCharacterToSpawn();
+        if(prefab!=null){
+            Transform character = Instantiate(prefab, transform);
+            character.GetComponent<CharacterManager>().OnDieEvent += NextSpawn;
+            if(targetForCharacters!=null)
                 character.gameObject.GetComponent<AIController>().SetMyTargetTransform(targetForCharacters);
         }
+    }
+
+    public void NextSpawn(){
+        SpawnCharacter();
     }
 
 

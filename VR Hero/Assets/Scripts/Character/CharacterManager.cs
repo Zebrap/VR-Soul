@@ -96,7 +96,7 @@ public class CharacterManager : MonoBehaviour
         OnDieEvent?.Invoke();
         animator.SetBool("Death",true);
         isAlive = false;
-        StartCoroutine(Decompose());
+        StartCoroutine("Decompose");
     }
     private IEnumerator Decompose()
     {
@@ -107,7 +107,7 @@ public class CharacterManager : MonoBehaviour
         while (timer > 0)
         {
             timer -= Time.deltaTime;
-            transform.position += new Vector3(0, -Time.deltaTime * 0.8f, 0);
+            transform.position += new Vector3(0, -Time.deltaTime * 1.5f, 0);
             yield return null;
         }
         Destroy(gameObject);

@@ -173,12 +173,12 @@ public class AIController : MonoBehaviour
     {
         if (TargetInRange())
         {
+            agent.enabled = false;
             Vector3 lookDir = (player.transform.position - transform.position).normalized;
             lookDir.y = 0;
             Quaternion _lookRotation = Quaternion.LookRotation(lookDir);
 
             transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * speedFaceTargetRotation);
-            agent.enabled = false;
         }
         else
         {
