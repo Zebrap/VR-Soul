@@ -101,12 +101,13 @@ public class CharacterManager : MonoBehaviour
     private IEnumerator Decompose()
     {
         characterController.enabled = false;
+        capsuleCollider.enabled = false;
         yield return new WaitForSeconds(2.0f);
         float timer = 5.0f;
         while (timer > 0)
         {
             timer -= Time.deltaTime;
-            transform.position += new Vector3(0, -Time.deltaTime * 0.6f, 0);
+            transform.position += new Vector3(0, -Time.deltaTime * 0.8f, 0);
             yield return null;
         }
         Destroy(gameObject);

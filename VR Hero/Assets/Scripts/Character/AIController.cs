@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyController : MonoBehaviour
+public class AIController : MonoBehaviour
 {
     [HideInInspector]
     public NavMeshAgent agent;
     private Animator animator;
-    private Vector3 startingPosition;
+
+    public Transform targetTransform;
+    private Vector3 targetPos;
 
     public bool isTargetInReach = false;
     public bool isApprochingTarget = false;
@@ -23,12 +25,27 @@ public class EnemyController : MonoBehaviour
     private CharacterManager characterManager;
     public float speedFaceTargetRotation = 2f;
 
+    public float timeToAttack = 0.3f;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         characterManager = GetComponent<CharacterManager>();
-        startingPosition = transform.position;
+        if (targetTransform != null)
+        {
+            targetPos = targetTransform.position;
+        }
+        else
+        {
+            targetPos = transform.position;
+        }
+    }
+
+    public void SetMyTargetTransform(Transform target)
+    {
+        targetTransform = target;
+        targetPos = targetTransform.position;
     }
 
     private void OnEnable()
@@ -56,14 +73,14 @@ public class EnemyController : MonoBehaviour
         }
         if (characterManager.isAlive)
         {
-              animator.SetFloat("Move", agent.velocity.magnitude);
+            animator.SetFloat("Move", agent.velocity.magnitude);
             //animator.SetFloat("Move", agent.velocity.magnitude, speedSmoothTime, Time.deltaTime);
         }
     }
 
     IEnumerator AttackDelay()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(timeToAttack);
         characterManager.Attack();
     }
 
@@ -74,7 +91,7 @@ public class EnemyController : MonoBehaviour
             agent.enabled = true;
             agent.isStopped = false;
             isApprochingTarget = false;
-            agent.SetDestination(startingPosition);
+            agent.SetDestination(targetPos);
         }
     }
 
@@ -91,6 +108,11 @@ public class EnemyController : MonoBehaviour
             {
                 agent.isStopped = false;
                 agent.SetDestination(player.position);
+                /*
+                if (agent.pathPending == true)
+                    Debug.Log("WAITING");
+                if (agent.pathPending == false)
+                    Debug.Log("FOLLOWING");*/
             }
             else
             {

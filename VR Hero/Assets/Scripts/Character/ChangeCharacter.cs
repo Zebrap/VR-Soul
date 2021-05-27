@@ -10,46 +10,46 @@ public class ChangeCharacter : MonoBehaviour
 
     public Soul soul;
 
-    private void Start() {
+    private void Start()
+    {
         XRController = GetComponent<XRCharacterController>();
-        ChangeCharacterObject(false, currentPlayer);
-        soul.NewTarget(currentPlayer.transform);
+        if (currentPlayer != null)
+        {
+            ChangeCharacterObject(false, currentPlayer);
+            soul.NewTarget(currentPlayer.transform);
+        }
     }
 
     public void ChangeToNewCharacter(GameObject selectedCharacter)
     {
-        if(currentPlayer!=null) ChangeCharacterObject(true, currentPlayer);
+        if (currentPlayer != null) ChangeCharacterObject(true, currentPlayer);
         ChangeCharacterObject(false, selectedCharacter);
         currentPlayer = selectedCharacter;
-        soul.NewTarget(currentPlayer.transform);
+        soul.NewTarget(selectedCharacter.transform);
     }
 
-    private void ChangeCharacterObject(bool isAi, GameObject characterObject){
-        
-        // active capsule
-        characterObject.GetComponent<CapsuleCollider>().enabled = isAi;
-        // disable character controller
-        characterObject.GetComponent<CharacterController>().enabled = !isAi;
+    private void ChangeCharacterObject(bool isAi, GameObject characterObject)
+    {
 
-        // disable XR character controller
-       // characterObject.GetComponent<XRCharacterController>().enabled = !isAi;
-        if(!isAi){
-            XRController.SetCharacter(characterObject.GetComponent<Animator>(), characterObject.GetComponent<CharacterController>(), characterObject.GetComponent<CharacterManager>(),characterObject.transform);
+        if (characterObject.GetComponent<CharacterManager>().isAlive)
+        {
+            // active capsule
+            characterObject.GetComponent<CapsuleCollider>().enabled = isAi;
+
+            // disable character controller
+            characterObject.GetComponent<CharacterController>().enabled = !isAi;
+
+            // active Enemy Controller
+            characterObject.GetComponent<AIController>().enabled = isAi;
+
+            // active navMesh agent
+            characterObject.GetComponent<NavMeshAgent>().enabled = isAi;
         }
 
-        // active Enemy Controller
-        characterObject.GetComponent<EnemyController>().enabled = isAi;
-
-        // active navMesh agent
-        characterObject.GetComponent<NavMeshAgent>().enabled = isAi;
-    /*
-        characterObject.layer = isAi ?  LayerMask.NameToLayer("Enemy") :  LayerMask.NameToLayer("Ally");
-
-        if(isAi){
-            characterObject.GetComponent<CharacterManager>().enemyLayers = LayerMask.GetMask("Ally");
-        }else
+        // set XR character controller
+        if (!isAi)
         {
-            characterObject.GetComponent<CharacterManager>().enemyLayers = LayerMask.GetMask("Enemy");
-        }*/
+            XRController.SetCharacter(characterObject.GetComponent<Animator>(), characterObject.GetComponent<CharacterController>(), characterObject.GetComponent<CharacterManager>(), characterObject.transform);
+        }
     }
 }
