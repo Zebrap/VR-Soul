@@ -27,7 +27,8 @@ public class CharacterManager : MonoBehaviour
 
     public delegate void EventHandlerOnDie();
     public event EventHandlerOnDie OnDieEvent;
-    private void Awake() {
+    private void Awake()
+    {
         stats = GetComponent<Stats>();
         animator = GetComponent<Animator>();
 
@@ -39,24 +40,17 @@ public class CharacterManager : MonoBehaviour
 
         stats.OnDieCallBack += Die;
     }
-
-    public void InitPlayerOnMe(){
-            OnGetHit?.Invoke(stats.health, stats.maxHealth);
+    private void Start() {
+        if(speciallAttackPrefab!=null)
+            mySpecialAttack = Instantiate(speciallAttackPrefab).GetComponent<SpecialAttack>();
     }
 
-    public void GetHit(float dmg)
+    public void InitPlayerOnMe()
     {
-        if (isAlive)
-        {
-            canMove = false;
-            isAttack= false;
-            StopCoroutine("AttackRate");
-            StartCoroutine("HurtDelay");
-            animator.SetTrigger("Hurt");
-            stats.GetHit(dmg);
-            OnGetHit?.Invoke(stats.health, stats.maxHealth);
-        }
+        OnGetHit?.Invoke(stats.health, stats.maxHealth);
     }
+
+    #region  Combat Methods
 
     public void Attack()
     {
@@ -69,12 +63,8 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
-    IEnumerator HurtDelay(){
-        yield return new WaitForSeconds(0.4f);
-        canMove = true;
-    }
-
-    IEnumerator AttackRate(){
+    IEnumerator AttackRate()
+    {
         yield return new WaitForSeconds(stats.attackRate);
         isAttack = false;
         canMove = true;
@@ -92,9 +82,53 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
-    private void Die(){
+    #endregion
+
+    #region  Speciall Attack
+
+    private SpecialAttack mySpecialAttack;
+
+    public Transform speciallAttackPrefab;
+    public void SpecialAttack()
+    {
+        if (mySpecialAttack != null)
+        {
+            if (mySpecialAttack.Cast(attackPoint.position, new Vector3(transform.forward.x * 100f, transform.forward.y + attackPoint.position.y, transform.forward.z * 100f), enemyLayers))
+            {
+                SpeciallAttackAnimation();
+            }
+        }
+    }
+
+    private void SpeciallAttackAnimation()
+    {
+
+    }
+    #endregion
+
+    #region  Get Hit Methods
+    public void GetHit(float dmg)
+    {
+        if (isAlive)
+        {
+            canMove = false;
+            isAttack = false;
+            StopCoroutine("AttackRate");
+            StartCoroutine("HurtDelay");
+            animator.SetTrigger("Hurt");
+            stats.GetHit(dmg);
+            OnGetHit?.Invoke(stats.health, stats.maxHealth);
+        }
+    }
+    IEnumerator HurtDelay()
+    {
+        yield return new WaitForSeconds(0.4f);
+        canMove = true;
+    }
+    private void Die()
+    {
         OnDieEvent?.Invoke();
-        animator.SetBool("Death",true);
+        animator.SetBool("Death", true);
         isAlive = false;
         StartCoroutine("Decompose");
     }
@@ -113,8 +147,16 @@ public class CharacterManager : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void SelectInteract(){
-        if(isAlive){
+    private void OnDestroy() {
+        if(mySpecialAttack!=null)
+            Destroy(mySpecialAttack.gameObject, 10f);
+    }
+
+    #endregion
+    public void SelectInteract()
+    {
+        if (isAlive)
+        {
             FindObjectOfType<ChangeCharacter>().ChangeToNewCharacter(gameObject);
         }
     }
@@ -125,6 +167,8 @@ public class CharacterManager : MonoBehaviour
             return;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
+
+    #region Jump Methods
     [HideInInspector]
     public bool isJumping;
 
@@ -135,8 +179,10 @@ public class CharacterManager : MonoBehaviour
         StartCoroutine("EndJump");
     }
 
-    IEnumerator EndJump(){
+    IEnumerator EndJump()
+    {
         yield return new WaitForSeconds(1.2f);
         isJumping = false;
     }
+    #endregion
 }

@@ -10,7 +10,8 @@ public class XRCharacterController : MonoBehaviour
 
     public Transform head = null;
     private Transform mesh = null;
-    public XRController controller = null;
+    public XRController controllerRight = null;
+    public XRController controllerLeft = null;
 
     private Animator animator = null;
     private CharacterController character = null;
@@ -31,13 +32,19 @@ public class XRCharacterController : MonoBehaviour
 
     private void Update()
     {
-        if (controller.enableInputActions && character != null)
+        if (controllerRight.enableInputActions && character != null)
         {
             if (characterManager.isAlive)
             {
-                AttackInput(controller.inputDevice);
-                JumpInput(controller.inputDevice);
-                CheckFormMovment(controller.inputDevice);
+                AttackInput(controllerRight.inputDevice);
+                UseAbility(controllerRight.inputDevice);
+            }
+        }
+        if (controllerLeft.enableInputActions && character != null)
+        {
+            if (characterManager.isAlive)
+            {
+                CheckFormMovment(controllerLeft.inputDevice);
             }
         }
     }
@@ -104,7 +111,7 @@ public class XRCharacterController : MonoBehaviour
         }
     }
 
-    private void JumpInput(InputDevice device)
+   /* private void JumpInput(InputDevice device)
     {
 
         if (device.TryGetFeatureValue(CommonUsages.secondaryButton, out bool isPressing))
@@ -112,6 +119,16 @@ public class XRCharacterController : MonoBehaviour
             if (isPressing && !characterManager.isJumping && characterManager.canMove)
             {
                 characterManager.Jump();
+            }
+        }
+    }*/
+    private void UseAbility(InputDevice device)
+    {
+        if (device.TryGetFeatureValue(CommonUsages.secondaryButton, out bool isPressing))
+        {
+            if (isPressing && characterManager.canMove)
+            {
+                characterManager.SpecialAttack();
             }
         }
     }

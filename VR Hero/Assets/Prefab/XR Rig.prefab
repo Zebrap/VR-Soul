@@ -200,7 +200,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   head: {fileID: 3923902199625707070}
-  controller: {fileID: 3923902199935846528}
+  controllerRight: {fileID: 0}
+  controllerLeft: {fileID: 0}
 --- !u!1 &3923902199935846539
 GameObject:
   m_ObjectHideFlags: 0
