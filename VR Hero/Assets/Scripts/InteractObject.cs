@@ -10,15 +10,11 @@ public class InteractObject : MonoBehaviour
     public GameObject hoverSign;
 
     private XRGrabInteractable xRGrabInteractable;
-
-    public bool lerpTransparent = false;
     private List<Material> materials;
 
     private float alpha = 0;
     private float lerp = 0;
     private byte a;
-
-    private bool isHover;
     private void Start()
     {
         xRGrabInteractable = GetComponent<XRGrabInteractable>();
@@ -31,8 +27,9 @@ public class InteractObject : MonoBehaviour
 
     public void ShowSign()
     {
-        StopCoroutine("FadeOut");
-        StartCoroutine("FadeIn");
+            StopCoroutine("FadeOut");
+            StartCoroutine("FadeIn");
+        
     }
 
     public void HideSign()
@@ -47,16 +44,16 @@ public class InteractObject : MonoBehaviour
     IEnumerator FadeIn()
     {
         lerp = 0;
-        while (lerp < 5f)
+        while (lerp < 3f)
         {
             foreach (Material material in materials)
             {
                 Color32 col = material.color;
 
-                alpha = Mathf.Lerp(col.a, 120f, lerp);
+                alpha = Mathf.Lerp(col.a, 180f, lerp);
 
                 a = (byte)alpha;
-                lerp += Time.deltaTime * 0.05f;
+                lerp += Time.deltaTime * 0.4f;
                 col.a = a;
                 material.color = col;
             }
@@ -76,7 +73,7 @@ public class InteractObject : MonoBehaviour
                 alpha = Mathf.Lerp(col.a, 0f, lerp);
 
                 a = (byte)alpha;
-                lerp += Time.deltaTime * 0.1f;
+                lerp += Time.deltaTime * 0.5f;
                 col.a = a;
                 material.color = col;
             }

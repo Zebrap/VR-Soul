@@ -15,8 +15,6 @@ public class AIController : MonoBehaviour
     public bool isTargetInReach = false;
     public bool isApprochingTarget = false;
     public float appprochingRange = 5f;
-
-    private float distanceFromPlayer;
     private Transform player;
 
     private float speedSmoothTime = 0.1f;
@@ -134,16 +132,6 @@ public class AIController : MonoBehaviour
             {
                 return false;
             }
-
-            /*distanceFromPlayer = Vector3.Distance(player.position, transform.position);
-            if (distanceFromPlayer > characterManager.attackRange)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }*/
         }
         return false;
     }
