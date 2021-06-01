@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterManager : MonoBehaviour
+[RequireComponent(typeof(Stats))]
+[RequireComponent(typeof(Animator))]
+public class CharacterManager : GetHitObject
 {
     Stats stats;
 
     Animator animator;
-    public bool isAlive = true;
 
     public Transform attackPoint;
     public float attackRange = 0.5f;
@@ -70,15 +71,23 @@ public class CharacterManager : MonoBehaviour
         canMove = true;
     }
 
-    public void CheckAttack()
-    {
+    public List<Collider> FindTargetInRange(){
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
+        List<Collider> targets = new List<Collider>(); 
         foreach (Collider enemy in hitEnemies)
         {
-            if (enemy.GetComponent<CharacterManager>())
+            if (enemy.GetComponent<GetHitObject>())
             {
-                enemy.GetComponent<CharacterManager>().GetHit(stats.attack);
+                targets.Add(enemy);
             }
+        }
+        return targets;
+    }
+
+    public void CheckAttack()
+    {
+        foreach(Collider enemy in FindTargetInRange()){
+                enemy.GetComponent<GetHitObject>().GetHit(stats.attack);
         }
     }
 
@@ -107,7 +116,7 @@ public class CharacterManager : MonoBehaviour
     #endregion
 
     #region  Get Hit Methods
-    public void GetHit(float dmg)
+    public override void GetHit(float dmg)
     {
         if (isAlive)
         {

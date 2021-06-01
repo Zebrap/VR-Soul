@@ -52,7 +52,7 @@ public class MagicBall : SpecialAttack
     private void OnTriggerEnter(Collider other)
     {
         if(IsInLayerMask(other.gameObject, targetLayer)){
-            other.gameObject.GetComponent<CharacterManager>().GetHit(100);
+            other.gameObject.GetComponent<GetHitObject>().GetHit(100);
             DisableSpell();
         }
     }

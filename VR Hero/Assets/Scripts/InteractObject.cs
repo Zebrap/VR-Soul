@@ -31,7 +31,6 @@ public class InteractObject : MonoBehaviour
 
     public void ShowSign()
     {
-        // hoverSign.SetActive(true);
         StopCoroutine("FadeOut");
         StartCoroutine("FadeIn");
     }
@@ -42,7 +41,6 @@ public class InteractObject : MonoBehaviour
         {
             StopCoroutine("FadeIn");
             StartCoroutine("FadeOut");
-            //   hoverSign.SetActive(false);
         }
     }
 
@@ -85,41 +83,4 @@ public class InteractObject : MonoBehaviour
             yield return null;
         }
     }
-
-
-/*    private void Update()
-    {
-        if (xRGrabInteractable.isSelected || xRGrabInteractable.isHovered)
-        {
-            //  hoverSign.SetActive(true);
-            foreach (Material material in materials)
-            {
-                Color32 col = material.color;
-
-                alpha = Mathf.Lerp(col.a, 120f, lerp);
-
-                a = (byte)alpha;
-                lerp += Time.deltaTime * 0.05f;
-                col.a = a;
-                // material.SetColor("_Color", col);
-                material.color = col;
-            }
-        }
-        else
-        {
-            //   hoverSign.SetActive(false);
-            foreach (Material material in materials)
-            {
-                Color32 col = material.color;
-
-                alpha = Mathf.Lerp(col.a, 0f, lerp);
-
-                a = (byte)alpha;
-                lerp += Time.deltaTime * 0.05f;
-                col.a = a;
-                // material.SetColor("_Color", col);
-                material.color = col;
-            }
-        }
-    }*/
 }

@@ -20,8 +20,7 @@ public class Stats : MonoBehaviour
         health -= Mathf.Clamp(dmg - defance, 0, dmg);
         if(health <= 0){
             health = 0;
-            if(OnDieCallBack!=null)
-                OnDieCallBack?.Invoke();
+            OnDieCallBack?.Invoke();
         }
     }
 

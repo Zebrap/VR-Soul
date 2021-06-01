@@ -57,7 +57,7 @@ public class AIController : MonoBehaviour
     {
         if (characterManager.isAlive && isTargetInReach && characterManager.canMove && player != null)
         {
-            if (player.GetComponent<CharacterManager>().isAlive)
+            if (player.GetComponent<GetHitObject>().isAlive)
             {
                 if (!isAttack && TargetInRange())
                 {
@@ -126,15 +126,24 @@ public class AIController : MonoBehaviour
     {
         if (player != null)
         {
-            distanceFromPlayer = Vector3.Distance(player.position, transform.position);
+            if(characterManager.FindTargetInRange().Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+            /*distanceFromPlayer = Vector3.Distance(player.position, transform.position);
             if (distanceFromPlayer > characterManager.attackRange)
             {
                 return false;
             }
             else
             {
-                return true; ;
-            }
+                return true;
+            }*/
         }
         return false;
     }
@@ -148,7 +157,7 @@ public class AIController : MonoBehaviour
             Collider[] characters = Physics.OverlapSphere(transform.position, appprochingRange, characterManager.enemyLayers);
             foreach (Collider character in characters)
             {
-                if (character.GetComponent<CharacterManager>().isAlive && Vector3.Distance(transform.position, character.transform.position) <= closeDistance)
+                if (character.GetComponent<GetHitObject>().isAlive && Vector3.Distance(transform.position, character.transform.position) <= closeDistance)
                 {
                     closeDistance = Vector3.Distance(transform.position, character.transform.position);
                     player = character.transform;
@@ -161,7 +170,7 @@ public class AIController : MonoBehaviour
             }
             else if (player != null)
             {
-                if (player.GetComponent<CharacterManager>().isAlive)
+                if (player.GetComponent<GetHitObject>().isAlive)
                 {
                     isTargetInReach = true;
                 }
