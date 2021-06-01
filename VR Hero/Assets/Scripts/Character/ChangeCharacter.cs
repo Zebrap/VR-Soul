@@ -34,10 +34,10 @@ public class ChangeCharacter : MonoBehaviour
         if (characterObject.GetComponent<CharacterManager>().isAlive)
         {
             // active capsule
-            characterObject.GetComponent<CapsuleCollider>().enabled = isAi;
+        //    characterObject.GetComponent<CapsuleCollider>().enabled = isAi;
 
             // disable character controller
-            characterObject.GetComponent<CharacterController>().enabled = !isAi;
+        //    characterObject.GetComponent<CharacterController>().enabled = !isAi;
 
             // active Enemy Controller
             characterObject.GetComponent<AIController>().enabled = isAi;

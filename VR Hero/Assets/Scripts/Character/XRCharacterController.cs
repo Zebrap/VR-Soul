@@ -76,6 +76,14 @@ public class XRCharacterController : MonoBehaviour
         Vector3 movment = currentDirection * speed;
 
         character.SimpleMove(movment);
+
+        /*character.Move(movment * Time.deltaTime);
+        private float gravity = 9.8f;
+        Vector3 gravityVector = Vector3.zero;
+        if(!character.isGrounded){
+            gravityVector.y -= gravity;
+        }
+        character.Move(gravityVector * Time.deltaTime);*/
     }
 
     private void OrientMesh()

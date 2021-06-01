@@ -1574,7 +1574,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 8dc824acae914e2469cd9db93cf571fc, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -1589,11 +1589,11 @@ CapsuleCollider:
   m_GameObject: {fileID: 9124029722233539857}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.17
-  m_Height: 0.75
+  m_Enabled: 0
+  m_Radius: 0.18
+  m_Height: 0.8
   m_Direction: 1
-  m_Center: {x: 0, y: 0.38, z: 0}
+  m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!143 &2949559372130840211
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1603,15 +1603,15 @@ CharacterController:
   m_GameObject: {fileID: 9124029722233539857}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Height: 0.75
-  m_Radius: 0.17
+  m_Height: 0.8
+  m_Radius: 0.18
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.38, z: 0}
+  m_Center: {x: 0, y: 0.48, z: 0}
 --- !u!114 &2949559372130840239
 MonoBehaviour:
   m_ObjectHideFlags: 0
