@@ -6,15 +6,13 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class XRCharacterController : MonoBehaviour
 {
-    public float speed = 5.0f;
-
     public Transform head = null;
     private Transform mesh = null;
     public XRController controllerRight = null;
     public XRController controllerLeft = null;
 
     private Animator animator = null;
-    private CharacterController character = null;
+    private CharacterController characterControll = null;
 
     private CharacterManager characterManager;
 
@@ -22,31 +20,41 @@ public class XRCharacterController : MonoBehaviour
 
     private bool isPressAttack = false;
 
+    private Vector3 playerVelocity;
+    private bool groundedPlayer;
+    public float playerSpeed = 5.0f;
+    public float jumpHeight = 1.0f;
+    private float gravityValue = -9.81f;
+
     public void SetCharacter(Animator animator, CharacterController characterController, CharacterManager characterManager, Transform mesh)
     {
         this.animator = animator;
-        this.character = characterController;
+        this.characterControll = characterController;
         this.characterManager = characterManager;
         this.mesh = mesh;
     }
 
     private void Update()
     {
-        if (controllerRight.enableInputActions && character != null)
+        if (characterControll != null)
         {
             if (characterManager.isAlive)
             {
-                AttackInput(controllerRight.inputDevice);
-                UseAbility(controllerRight.inputDevice);
+                if (controllerRight.enableInputActions)
+                {
+                    AttackInput(controllerRight.inputDevice);
+                    JumpInput(controllerRight.inputDevice);
+                    RotateCharacter(controllerRight.inputDevice);
+                }
+                if (controllerLeft.enableInputActions)
+                {
+                    CheckFormMovment(controllerLeft.inputDevice);
+                    UseAbility(controllerLeft.inputDevice);
+                }
+                MoveCharacter();
             }
         }
-        if (controllerLeft.enableInputActions && character != null)
-        {
-            if (characterManager.isAlive)
-            {
-                CheckFormMovment(controllerLeft.inputDevice);
-            }
-        }
+
     }
 
     private void CheckFormMovment(InputDevice device)
@@ -54,8 +62,6 @@ public class XRCharacterController : MonoBehaviour
         if (device.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 joystickDirection) && characterManager.canMove)
         {
             CalculateDirection(joystickDirection);
-
-            MoveCharacter();
 
             OrientMesh();
         }
@@ -70,12 +76,28 @@ public class XRCharacterController : MonoBehaviour
 
         currentDirection = Quaternion.Euler(headRotation) * newDirection;
     }
-
     private void MoveCharacter()
     {
-        Vector3 movment = currentDirection * speed;
+        if (characterManager.canMove)
+        {
+            groundedPlayer = characterControll.isGrounded;
+            if (groundedPlayer && playerVelocity.y < 0)
+            {
+                playerVelocity.y = 0f;
+            }
+            characterControll.Move(currentDirection * Time.deltaTime * playerSpeed);
+            /*  if (currentDirection != Vector3.zero)
+              {
+                  characterControll.transform.forward = currentDirection;
+              }
+              */
+            playerVelocity.y += gravityValue * Time.deltaTime;
+            characterControll.Move(playerVelocity * Time.deltaTime);
+        }
 
-        character.SimpleMove(movment);
+        /*     Vector3 movment = currentDirection * speed;
+
+             character.SimpleMove(movment);*/
 
         /*character.Move(movment * Time.deltaTime);
         private float gravity = 9.8f;
@@ -119,17 +141,18 @@ public class XRCharacterController : MonoBehaviour
         }
     }
 
-   /* private void JumpInput(InputDevice device)
+    private void JumpInput(InputDevice device)
     {
 
         if (device.TryGetFeatureValue(CommonUsages.secondaryButton, out bool isPressing))
         {
-            if (isPressing && !characterManager.isJumping && characterManager.canMove)
+            if (isPressing && characterControll.isGrounded && characterManager.canMove)
             {
                 characterManager.Jump();
+                playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
             }
         }
-    }*/
+    }
     private void UseAbility(InputDevice device)
     {
         if (device.TryGetFeatureValue(CommonUsages.secondaryButton, out bool isPressing))
@@ -137,6 +160,24 @@ public class XRCharacterController : MonoBehaviour
             if (isPressing && characterManager.canMove)
             {
                 characterManager.SpecialAttack();
+            }
+        }
+    }
+
+    private void RotateCharacter(InputDevice device)
+    {
+
+        if (device.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 joystickDirection) && characterManager.canMove)
+        {
+
+            Vector3 newDirection = new Vector3(joystickDirection.x, 0, joystickDirection.y);
+
+            Vector3 headRotation = new Vector3(0, head.transform.eulerAngles.y, 0);
+
+            Vector3 faceToDirection = Quaternion.Euler(headRotation) * newDirection;
+            if (faceToDirection != Vector3.zero)
+            {
+                mesh.transform.forward = faceToDirection;
             }
         }
     }

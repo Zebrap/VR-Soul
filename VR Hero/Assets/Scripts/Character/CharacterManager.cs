@@ -178,20 +178,10 @@ public class CharacterManager : GetHitObject
     }
 
     #region Jump Methods
-    [HideInInspector]
-    public bool isJumping;
 
     internal void Jump()
     {
-        isJumping = true;
         animator.SetTrigger("Jump");
-        StartCoroutine("EndJump");
-    }
-
-    IEnumerator EndJump()
-    {
-        yield return new WaitForSeconds(1.2f);
-        isJumping = false;
     }
     #endregion
 }

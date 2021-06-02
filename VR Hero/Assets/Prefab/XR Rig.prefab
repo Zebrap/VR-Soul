@@ -231,10 +231,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8f0ff22ec941694487fd471bb2c38d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
   head: {fileID: 3923902199625707070}
   controllerRight: {fileID: 3923902199935846528}
   controllerLeft: {fileID: 3923902199935846528}
+  playerSpeed: 5
+  jumpHeight: 1
 --- !u!1 &3923902199935846539
 GameObject:
   m_ObjectHideFlags: 0
