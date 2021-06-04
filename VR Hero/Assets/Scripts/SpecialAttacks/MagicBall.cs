@@ -7,6 +7,7 @@ public class MagicBall : SpecialAttack
     private Vector3 targetPos;
 
     public ParticleSystem particleBall;
+    public float spellPower = 100;
 
     private LayerMask targetLayer;
 
@@ -14,19 +15,19 @@ public class MagicBall : SpecialAttack
     private float step;
     [SerializeField] [Range(1f, 50f)] float lerpTime = 2f;
 
-    private float timeToEnd = 5f;
+    private float timeToEnd = 3f;
     private float nextTime;
     private void Start()
     {
         step = lerpTime * Time.fixedDeltaTime;
     }
-    public override bool Cast(Vector3 myStartPos, Vector3 target, LayerMask layerTarget)
+    public override bool Cast(Vector3 myStartPos, Vector3 endPosition, LayerMask layerTarget, Transform selfTransform)
     {
         if (!isCasted)
         {
             isCasted = true;
             transform.position = myStartPos;
-            targetPos = target;
+            targetPos = endPosition;
             targetLayer = layerTarget;
             particleBall.gameObject.SetActive(true);
             particleBall.Clear();
@@ -52,7 +53,7 @@ public class MagicBall : SpecialAttack
     private void OnTriggerEnter(Collider other)
     {
         if(IsInLayerMask(other.gameObject, targetLayer)){
-            other.gameObject.GetComponent<GetHitObject>().GetHit(100);
+            other.gameObject.GetComponent<GetHitObject>().GetHit(spellPower);
             DisableSpell();
         }
     }
@@ -63,7 +64,6 @@ public class MagicBall : SpecialAttack
 
     private void DisableSpell()
     {
-
         particleBall.Stop();
         particleBall.Clear();
         isCasted = false;

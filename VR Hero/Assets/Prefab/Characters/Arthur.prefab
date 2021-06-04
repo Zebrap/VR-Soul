@@ -4535,8 +4535,8 @@ MonoBehaviour:
     m_Bits: 128
   isAttack: 0
   canMove: 1
-  speciallAttackPrefab: {fileID: 0}
-  isJumping: 0
+  speciallAttackPrefab: {fileID: 4870303393485142863, guid: 2d2ea3bb77d9d87428369aa3a3ae9ea5,
+    type: 3}
 --- !u!114 &2542337119795205566
 MonoBehaviour:
   m_ObjectHideFlags: 0

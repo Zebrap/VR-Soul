@@ -23,8 +23,8 @@ public class CharacterManager : GetHitObject
     private CharacterController characterController;
     private CapsuleCollider capsuleCollider;
 
-    public delegate void EventHandlerGetHit(float hp, float maxHp);
-    public event EventHandlerGetHit OnGetHit;
+    public delegate void EventHandlerChangeHp(float hp, float maxHp);
+    public event EventHandlerChangeHp OnChangeHp;
 
     public delegate void EventHandlerOnDie();
     public event EventHandlerOnDie OnDieEvent;
@@ -48,7 +48,7 @@ public class CharacterManager : GetHitObject
 
     public void InitPlayerOnMe()
     {
-        OnGetHit?.Invoke(stats.health, stats.maxHealth);
+        OnChangeHp?.Invoke(stats.health, stats.maxHealth);
     }
 
     #region  Combat Methods
@@ -102,7 +102,7 @@ public class CharacterManager : GetHitObject
     {
         if (mySpecialAttack != null)
         {
-            if (mySpecialAttack.Cast(attackPoint.position, new Vector3(transform.forward.x * 100f, transform.forward.y + attackPoint.position.y, transform.forward.z * 100f), enemyLayers))
+            if (mySpecialAttack.Cast(attackPoint.position, new Vector3(transform.forward.x * 100f, transform.forward.y + attackPoint.position.y, transform.forward.z * 100f), enemyLayers, transform))
             {
                 SpeciallAttackAnimation();
             }
@@ -126,7 +126,7 @@ public class CharacterManager : GetHitObject
             StartCoroutine("HurtDelay");
             animator.SetTrigger("Hurt");
             stats.GetHit(dmg);
-            OnGetHit?.Invoke(stats.health, stats.maxHealth);
+            OnChangeHp?.Invoke(stats.health, stats.maxHealth);
         }
     }
     IEnumerator HurtDelay()
@@ -182,6 +182,12 @@ public class CharacterManager : GetHitObject
     internal void Jump()
     {
         animator.SetTrigger("Jump");
+    }
+
+   public override void HealHP(float healPower)
+    {
+        stats.Heal(healPower);
+        OnChangeHp?.Invoke(stats.health, stats.maxHealth);
     }
     #endregion
 }

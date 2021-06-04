@@ -5,4 +5,5 @@ using UnityEngine;
 public abstract class GetHitObject : MonoBehaviour
 {    public bool isAlive = true;
     public abstract void GetHit(float dmg);
+    public abstract void  HealHP(float healPower);
 }

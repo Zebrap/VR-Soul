@@ -32,7 +32,7 @@ public class Soul : MonoBehaviour
         }
         targetTransform = target;
         characterManager = target.gameObject.GetComponent<CharacterManager>();
-        characterManager.OnGetHit += ChangeHpIndicator;
+        characterManager.OnChangeHp += ChangeHpIndicator;
         characterManager.OnDieEvent += OnLostCharacter;
 
         characterManager.InitPlayerOnMe();
@@ -64,7 +64,7 @@ public class Soul : MonoBehaviour
 
     private void CancelEventsOnCharacter()
     {
-        characterManager.OnGetHit -= ChangeHpIndicator;
+        characterManager.OnChangeHp -= ChangeHpIndicator;
         characterManager.OnDieEvent -= OnLostCharacter;
     }
 

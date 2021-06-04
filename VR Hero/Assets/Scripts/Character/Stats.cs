@@ -24,4 +24,11 @@ public class Stats : MonoBehaviour
         }
     }
 
+    public void Heal(float power){
+        if(health>0)
+        {
+            health = Mathf.Clamp(health+power, 0, maxHealth);
+        }
+    }
+
 }

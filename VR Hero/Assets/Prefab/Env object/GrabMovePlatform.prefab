@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 3826706737125616102}
   - component: {fileID: 3826706737125616025}
   - component: {fileID: 1114070164}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GrabMovePlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,8 +115,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3826706737125616111}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.09, y: 0.66, z: -2.97}
-  m_LocalScale: {x: 3, y: 0.5, z: 3}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 681678032}
   m_Father: {fileID: 0}
@@ -196,9 +196,9 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 122
   m_CollisionDetection: 0
 --- !u!153 &3826706737125616100
 ConfigurableJoint:
@@ -212,7 +212,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0.5, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 6.84, y: 5.56, z: 2.56}
+  m_ConnectedAnchor: {x: -0.36, y: 5.3199997, z: 11.07}
   serializedVersion: 2
   m_SecondaryAxis: {x: 1, y: 0, z: 0}
   m_XMotion: 0
@@ -225,7 +225,7 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LinearLimit:
-    limit: 3
+    limit: 1.5
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
@@ -353,7 +353,19 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1114070164}
+        m_TargetAssemblyTypeName: InteractObject, Assembly-CSharp
+        m_MethodName: ShowSign
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
       m_Calls:
@@ -464,8 +476,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AgentTypeID: 0
-  m_StartPoint: {x: -0.19708014, y: 0.42659622, z: 1.0092373}
-  m_EndPoint: {x: -0.36094475, y: 0.41365033, z: 2.891601}
+  m_StartPoint: {x: 0, y: 1.5000002, z: 0.93725204}
+  m_EndPoint: {x: 0, y: 1.5000002, z: 1.9161491}
   m_Width: 2.3220327
   m_CostModifier: -1
   m_Bidirectional: 1
@@ -500,4 +512,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hoverSign: {fileID: 681678029}
-  lerpTransparent: 0

@@ -23,4 +23,9 @@ public class FractionCore : GetHitObject
         boxCollider.enabled = false;
         isAlive = false;
     }
+
+    public override void HealHP(float healPower)
+    {
+        stats.Heal(healPower);
+    }
 }
