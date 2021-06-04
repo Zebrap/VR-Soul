@@ -25,11 +25,14 @@ public class AIController : MonoBehaviour
 
     public float timeToAttack = 0.3f;
 
+    private NavMeshPath path;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         characterManager = GetComponent<CharacterManager>();
+        path = new NavMeshPath();
         if (targetTransform != null)
         {
             targetPos = targetTransform.position;
@@ -93,6 +96,7 @@ public class AIController : MonoBehaviour
         }
     }
 
+
     private void FollowPlayer()
     {
         if (!isApprochingTarget)
@@ -104,13 +108,16 @@ public class AIController : MonoBehaviour
         {
             if (player != null && !TargetInRange())
             {
-                agent.isStopped = false;
-                agent.SetDestination(player.position);
-                /*
-                if (agent.pathPending == true)
-                    Debug.Log("WAITING");
                 if (agent.pathPending == false)
-                    Debug.Log("FOLLOWING");*/
+                {
+                    agent.isStopped = false;
+                    agent.CalculatePath(player.position, path);
+                    if (path.status != NavMeshPathStatus.PathInvalid)
+                    {
+                        agent.SetPath(path);
+                       // agent.SetDestination(player.position);
+                    }
+                }
             }
             else
             {
@@ -124,7 +131,7 @@ public class AIController : MonoBehaviour
     {
         if (player != null)
         {
-            if(characterManager.FindTargetInRange().Count > 0)
+            if (characterManager.FindTargetInRange().Count > 0)
             {
                 return true;
             }
