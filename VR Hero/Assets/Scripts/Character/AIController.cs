@@ -95,7 +95,7 @@ public class AIController : MonoBehaviour
             agent.SetDestination(targetPos);
         }
     }
-
+    public LineRenderer lineRenderer;
 
     private void FollowPlayer()
     {
@@ -112,11 +112,16 @@ public class AIController : MonoBehaviour
                 {
                     agent.isStopped = false;
                     agent.CalculatePath(player.position, path);
-                    if (path.status != NavMeshPathStatus.PathInvalid)
+                    Vector3[] corners = path.corners;
+                    lineRenderer.positionCount = corners.Length;
+                    lineRenderer.SetPositions(corners);
+                    if (path.status == NavMeshPathStatus.PathPartial && path.status == NavMeshPathStatus.PathInvalid)
                     {
-                        agent.SetPath(path);
-                       // agent.SetDestination(player.position);
+                      //  agent.SetDestination(player.position);
+                    }else if(path.status == NavMeshPathStatus.PathComplete){
+                        agent.SetDestination(player.position);
                     }
+                     //   agent.SetPath(path);
                 }
             }
             else

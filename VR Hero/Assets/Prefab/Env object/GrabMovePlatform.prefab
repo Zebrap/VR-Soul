@@ -97,9 +97,9 @@ GameObject:
   - component: {fileID: 3826706737125616100}
   - component: {fileID: 3826706737125616110}
   - component: {fileID: 3826706737125616103}
-  - component: {fileID: 3826706737125616102}
   - component: {fileID: 3826706737125616025}
   - component: {fileID: 1114070164}
+  - component: {fileID: 1630774388}
   m_Layer: 8
   m_Name: GrabMovePlatform
   m_TagString: Untagged
@@ -212,7 +212,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0.5, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.36, y: 5.3199997, z: 11.07}
+  m_ConnectedAnchor: {x: -0.66, y: 5.23, z: 8.73}
   serializedVersion: 2
   m_SecondaryAxis: {x: 1, y: 0, z: 0}
   m_XMotion: 0
@@ -463,7 +463,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e038bf700cfa444fb16c6ef963be9f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3826706737125616102
+--- !u!208 &3826706737125616025
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3826706737125616111}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 2.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: -2.04, z: 0}
+  m_TimeToStationary: 0.5
+--- !u!114 &1114070164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3826706737125616111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e36937c2be952f48b8b7892476bc8c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSign: {fileID: 681678029}
+--- !u!114 &1630774388
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -481,34 +510,5 @@ MonoBehaviour:
   m_Width: 2.3220327
   m_CostModifier: -1
   m_Bidirectional: 1
-  m_AutoUpdatePosition: 0
+  m_AutoUpdatePosition: 1
   m_Area: 0
---- !u!208 &3826706737125616025
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3826706737125616111}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 2.5, z: 0.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: -2.22, z: 0}
-  m_TimeToStationary: 0.5
---- !u!114 &1114070164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3826706737125616111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e36937c2be952f48b8b7892476bc8c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hoverSign: {fileID: 681678029}

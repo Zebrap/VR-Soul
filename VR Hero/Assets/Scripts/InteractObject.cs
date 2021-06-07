@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -11,6 +12,7 @@ public class InteractObject : MonoBehaviour
 
     private XRGrabInteractable xRGrabInteractable;
     private List<Material> materials;
+
 
     private float alpha = 0;
     private float lerp = 0;
@@ -23,6 +25,9 @@ public class InteractObject : MonoBehaviour
         {
             materials.Add(material);
         }
+    }
+
+    private void Update() {
     }
 
     public void ShowSign()
