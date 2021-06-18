@@ -1397,13 +1397,73 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3826706737125616110, guid: 9be64793ef65ce44cb9c1111c1b21523,
+        type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1114070163}
+    - target: {fileID: 3826706737125616110, guid: 9be64793ef65ce44cb9c1111c1b21523,
+        type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1114070163}
+    - target: {fileID: 3826706737125616110, guid: 9be64793ef65ce44cb9c1111c1b21523,
+        type: 3}
+      propertyPath: m_LastHoverExited.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1114070163}
+    - target: {fileID: 3826706737125616110, guid: 9be64793ef65ce44cb9c1111c1b21523,
+        type: 3}
+      propertyPath: m_FirstHoverEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1114070163}
+    - target: {fileID: 3826706737125616110, guid: 9be64793ef65ce44cb9c1111c1b21523,
+        type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: HidenGlowFade, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3826706737125616110, guid: 9be64793ef65ce44cb9c1111c1b21523,
+        type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: HidenGlowFade, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3826706737125616110, guid: 9be64793ef65ce44cb9c1111c1b21523,
+        type: 3}
+      propertyPath: m_LastHoverExited.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: HidenGlowFade, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3826706737125616110, guid: 9be64793ef65ce44cb9c1111c1b21523,
+        type: 3}
+      propertyPath: m_FirstHoverEntered.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: HidenGlowFade, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3826706737125616111, guid: 9be64793ef65ce44cb9c1111c1b21523,
         type: 3}
       propertyPath: m_Name
       value: GrabMovePlatform
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1114070164, guid: 9be64793ef65ce44cb9c1111c1b21523, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9be64793ef65ce44cb9c1111c1b21523, type: 3}
+--- !u!1 &1114070162 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3826706737125616111, guid: 9be64793ef65ce44cb9c1111c1b21523,
+    type: 3}
+  m_PrefabInstance: {fileID: 1114070161}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1114070163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114070162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bae4262cb868e84c848c134f9b3eeb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lerpScale: 0.02
 --- !u!1 &1120694092
 GameObject:
   m_ObjectHideFlags: 0
